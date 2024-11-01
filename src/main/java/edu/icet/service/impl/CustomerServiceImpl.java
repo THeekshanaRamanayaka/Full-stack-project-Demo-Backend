@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> getAll() {
         List<Customer> customerList = new ArrayList<>();
-        repository.findAll().forEach(customerEntity -> {
-            customerList.add(mapper.map(customerEntity, Customer.class));
-        });
+        repository.findAll().forEach(customerEntity -> customerList.add(mapper.map(customerEntity, Customer.class)));
         return customerList;
     }
 
