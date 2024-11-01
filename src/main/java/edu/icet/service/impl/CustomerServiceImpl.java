@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +20,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> getAll() {
-        return null;
+        List<Customer> customerList = new ArrayList<>();
+        repository.findAll().forEach(customerEntity -> {
+            customerList.add(mapper.map(customerEntity, Customer.class));
+        });
+        return customerList;
     }
 
     @Override
@@ -28,16 +34,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer searchCustomer(Integer id) {
-        return null;
+        return mapper.map(repository.findById(id), Customer.class);
     }
 
     @Override
     public void updateCustomer(Customer customer) {
-
+        repository.save(mapper.map(customer, CustomerEntity.class));
     }
 
     @Override
     public void deleteCustomer(Integer id) {
-
+        repository.deleteById(id);
     }
 }
